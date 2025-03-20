@@ -15,6 +15,8 @@ const ConsultarGuia = () => {
   const [numeroGuia, setNumeroGuia] = React.useState("");
   console.log("prueba", numeroGuia);
 
+ 
+
   const handleChange = (e) => {
     let newValue = e.target.value.replace(/\D/g, "");
     if (newValue.length > 11) return;
@@ -76,7 +78,7 @@ const ConsultarGuia = () => {
         sx={{
           "& .MuiDialog-paper": {
             width: "auto",
-            maxWidth: "none", 
+            maxWidth: "none",
             height: "auto",
           },
         }}
