@@ -51,27 +51,24 @@ const Tracking = ({ numeroGuia }: TrackingProps) => {
 
   const guia = obtenerGuiaSimulada();
   const [eventosMostrados, setEventosMostrados] = useState([guia.eventos[0]]);
-  console.log(eventosMostrados);
   const [coordenadasActuales, setCoordenadasActuales] = useState(
     guia.eventos[0].cordenadas
   );
-  console.log(coordenadasActuales);
+  const [estadoActual, setEstadoActual] = useState(guia.eventos[0].descripcion); // Nuevo estado para el estado del paquete
 
   useEffect(() => {
     const intervalo = setInterval(() => {
       setEventosMostrados((prevEventos) => {
         const siguienteIndice = prevEventos.length;
         if (siguienteIndice < guia.eventos.length) {
-          const nuevoEventosMostrados = [
-            ...prevEventos,
-            guia.eventos[siguienteIndice],
-          ];
-          setCoordenadasActuales(guia.eventos[siguienteIndice].cordenadas); 
-          return nuevoEventosMostrados;
+          const nuevoEvento = guia.eventos[siguienteIndice];
+          setCoordenadasActuales(nuevoEvento.cordenadas);
+          setEstadoActual(nuevoEvento.descripcion); // Actualizar el estado del paquete
+          return [...prevEventos, nuevoEvento];
         }
         return prevEventos;
       });
-    }, 10000);
+    }, 6000);
 
     return () => clearInterval(intervalo);
   }, []);
@@ -88,16 +85,18 @@ const Tracking = ({ numeroGuia }: TrackingProps) => {
     >
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         <Grid item xs={12} textAlign="center">
-          <Typography>
-            Este es el número de tu guía
-            <br />
-            {guia.numero_guia} <br />
-            enviada desde: {guia.origen}
-          </Typography>
+          <Typography>Este es el número de tu guía</Typography>
+          <Typography>{guia.numero_guia}</Typography>
+          <Typography>Enviada desde: {guia.origen}</Typography>
         </Grid>
         <Grid item xs={12} textAlign="center">
           <Typography>
             Fecha estimada de entrega: {guia.fecha_estimada_entrega}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} textAlign="center">
+          <Typography variant="h6" color="primary">
+            Estado Actual: {estadoActual}
           </Typography>
         </Grid>
 
@@ -124,7 +123,7 @@ const Tracking = ({ numeroGuia }: TrackingProps) => {
                   {evento.descripcion.includes("reparto") && (
                     <LocalShippingIcon fontSize="large" />
                   )}
-                  {evento.descripcion.includes("Entregado") && (
+                  {evento.descripcion.includes("Entregada") && (
                     <BeenhereIcon fontSize="large" />
                   )}
                 </Box>
@@ -154,7 +153,7 @@ const Tracking = ({ numeroGuia }: TrackingProps) => {
           <Typography>Ubicación en el mapa de tu Paquete</Typography>
         </Grid>
         <Grid item xs={12} textAlign="center">
-          <MapaTracking coordenadasActuales={coordenadasActuales}/>
+          <MapaTracking coordenadasActuales={coordenadasActuales} />
         </Grid>
       </Grid>
     </Box>

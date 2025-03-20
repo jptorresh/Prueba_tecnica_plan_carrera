@@ -16,7 +16,8 @@ const MapaTracking = ({ coordenadasActuales }: MapaTrackingProps) => {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    L.marker([coordenadasActuales.lat, - coordenadasActuales.lng]).addTo(map);
+    L.marker([coordenadasActuales.lat, coordenadasActuales.lng]).addTo(map);
+
 
 
     return () => {
