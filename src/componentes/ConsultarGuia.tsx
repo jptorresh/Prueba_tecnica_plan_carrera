@@ -4,36 +4,44 @@ import {
   Dialog,
   InputAdornment,
   OutlinedInput,
-  TextField,
   Typography,
+  FormHelperText
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import Tracking from "./Tracking";
+import { useStylesTracking } from "../estilos/Tracking.styles";
 
 const ConsultarGuia = () => {
-  const [openTracking, setOpenTracking] = React.useState(false);
-  const [numeroGuia, setNumeroGuia] = React.useState("");
-  console.log("prueba", numeroGuia);
-
- 
+  const [openTracking, setOpenTracking] = useState(false);
+  const [numeroGuia, setNumeroGuia] = useState("");
+  const [error, setError] = useState("");
+  const classes = useStylesTracking();
 
   const handleChange = (e) => {
     let newValue = e.target.value.replace(/\D/g, "");
     if (newValue.length > 11) return;
     setNumeroGuia(newValue);
+    setError("");
   };
 
   const manejadorEnter = (event) => {
-    if (numeroGuia === "") {
-      return;
-    }
     if (event.key === "Enter") {
-      setOpenTracking(true);
+      event.preventDefault();
+      validarYAbrirTracking();
     }
   };
 
   const handleClickOpenTracking = () => {
-    if (numeroGuia === "") {
+    validarYAbrirTracking();
+  };
+
+  const validarYAbrirTracking = () => {
+    if (!numeroGuia) {
+      setError("Campo obligatorio");
+      return;
+    }
+    if (numeroGuia.length < 11) {
+      setError("La guía debe tener 11 dígitos");
       return;
     }
     setOpenTracking(true);
@@ -42,6 +50,7 @@ const ConsultarGuia = () => {
   const handleCloseTracking = () => {
     setOpenTracking(false);
   };
+
   return (
     <>
       <Box
@@ -50,10 +59,12 @@ const ConsultarGuia = () => {
         noValidate
         autoComplete="off"
       >
-        <Typography>
+        <img src="/paquete.avif" alt="paquete" />
+        <Typography className={classes.TituloConsulta}>
           Ingresa los 11 números de tu guía Nacional o Internacional.
         </Typography>
         <OutlinedInput
+          className={classes.InputTracking}
           onKeyDown={manejadorEnter}
           value={numeroGuia}
           onChange={handleChange}
@@ -65,10 +76,14 @@ const ConsultarGuia = () => {
           }}
           endAdornment={
             <InputAdornment position="end">
-              <Button onClick={handleClickOpenTracking}>Ubicar tu Guía</Button>
+              <Button className={classes.BotonUbicar} onClick={handleClickOpenTracking}>
+                Ubicar tu Guía
+              </Button>
             </InputAdornment>
           }
+          error={!!error}
         />
+        {error && <FormHelperText  sx={{fontSize: 18}}error>{error}</FormHelperText>}
       </Box>
       <Dialog
         open={openTracking}
