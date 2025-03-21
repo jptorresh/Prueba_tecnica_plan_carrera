@@ -25,11 +25,9 @@ interface TrackingProps {
 
 const Tracking = ({ numeroGuia, onClose }: TrackingProps) => {
   const classes = useStylesTracking();
-  const obtenerGuiaSimulada = () => ({
-    numero_guia: numeroGuia,
-    origen: "Medellín",
-    fecha_estimada_entrega: "2021-12-20",
-    eventos: [
+
+  const obtenerGuiaSimulada = () => {
+    const eventos = [
       {
         descripcion: "En terminal origen",
         ubicacion: "Cali",
@@ -60,8 +58,16 @@ const Tracking = ({ numeroGuia, onClose }: TrackingProps) => {
         fecha: "2021-12-15 18:00",
         cordenadas: { lat: 6.2442, lng: -75.5812 },
       },
-    ],
-  });
+    ];
+  
+    return {
+      numero_guia: numeroGuia,
+      origen: eventos[0].ubicacion, 
+      fecha_estimada_entrega: eventos[eventos.length - 1].fecha, 
+      eventos,
+    };
+  };
+  
 
   const guia = obtenerGuiaSimulada();
   const [eventosMostrados, setEventosMostrados] = useState([guia.eventos[0]]);
