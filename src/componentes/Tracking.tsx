@@ -1,16 +1,30 @@
-import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+  IconButton,
+  Card,
+  CardContent,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import BeenhereIcon from "@mui/icons-material/Beenhere";
 import EastIcon from "@mui/icons-material/East";
 import MapaTracking from "./MapaTracking";
+import { useStylesTracking } from "../estilos/Tracking.styles";
+import CloseIcon from "@mui/icons-material/Close";
+import ShareLocationIcon from "@mui/icons-material/ShareLocation";
 
 interface TrackingProps {
   numeroGuia: string;
+  onClose: () => void;
 }
 
-const Tracking = ({ numeroGuia }: TrackingProps) => {
+const Tracking = ({ numeroGuia, onClose }: TrackingProps) => {
+  const classes = useStylesTracking();
   const obtenerGuiaSimulada = () => ({
     numero_guia: numeroGuia,
     origen: "Medellín",
@@ -54,7 +68,7 @@ const Tracking = ({ numeroGuia }: TrackingProps) => {
   const [coordenadasActuales, setCoordenadasActuales] = useState(
     guia.eventos[0].cordenadas
   );
-  const [estadoActual, setEstadoActual] = useState(guia.eventos[0].descripcion); // Nuevo estado para el estado del paquete
+  const [estadoActual, setEstadoActual] = useState(guia.eventos[0].descripcion);
 
   useEffect(() => {
     const intervalo = setInterval(() => {
@@ -63,12 +77,12 @@ const Tracking = ({ numeroGuia }: TrackingProps) => {
         if (siguienteIndice < guia.eventos.length) {
           const nuevoEvento = guia.eventos[siguienteIndice];
           setCoordenadasActuales(nuevoEvento.cordenadas);
-          setEstadoActual(nuevoEvento.descripcion); // Actualizar el estado del paquete
+          setEstadoActual(nuevoEvento.descripcion);
           return [...prevEventos, nuevoEvento];
         }
         return prevEventos;
       });
-    }, 6000);
+    }, 10000);
 
     return () => clearInterval(intervalo);
   }, []);
@@ -84,19 +98,29 @@ const Tracking = ({ numeroGuia }: TrackingProps) => {
       }}
     >
       <Grid container spacing={2} justifyContent="center" alignItems="center">
-        <Grid item xs={12} textAlign="center">
-          <Typography>Este es el número de tu guía</Typography>
-          <Typography>{guia.numero_guia}</Typography>
-          <Typography>Enviada desde: {guia.origen}</Typography>
+        <Grid item xs={12} textAlign="right">
+          <IconButton aria-label="" onClick={onClose}>
+            <CloseIcon fontSize="large" />
+          </IconButton>
         </Grid>
         <Grid item xs={12} textAlign="center">
-          <Typography>
-            Fecha estimada de entrega: {guia.fecha_estimada_entrega}
+          <Typography className={classes.Titulo}>
+            Este es el número de tu guía
+          </Typography>
+          <Typography className={classes.TituloConsulta}>{guia.numero_guia}</Typography>
+          <Typography className={classes.Titulo}>
+            Enviada desde: <span className={classes.Texto}>{guia.origen}</span>
           </Typography>
         </Grid>
         <Grid item xs={12} textAlign="center">
-          <Typography variant="h6" color="primary">
-            Estado Actual: {estadoActual}
+          <Typography className={classes.Titulo}>
+            Fecha estimada de entrega:{" "}
+            <span className={classes.Texto}>{guia.fecha_estimada_entrega}</span>
+          </Typography>
+        </Grid>
+        <Grid item xs={12} textAlign="center">
+          <Typography className={classes.Titulo}>
+            Estado Actual: <span className={classes.Texto}>{estadoActual}</span>
           </Typography>
         </Grid>
 
@@ -112,28 +136,51 @@ const Tracking = ({ numeroGuia }: TrackingProps) => {
               <Grid item xs={12} textAlign="center">
                 <Box>
                   {evento.descripcion.includes("terminal origen") && (
-                    <MapsHomeWorkIcon fontSize="large" />
+                    <MapsHomeWorkIcon
+                      sx={{ color: "#01ADEE", fontSize: 100 }}
+                    />
                   )}
                   {evento.descripcion.includes("transporte") && (
-                    <LocalShippingIcon fontSize="large" />
+                    <LocalShippingIcon
+                      fontSize="large"
+                      sx={{ color: "#01ADEE", fontSize: 100 }}
+                    />
                   )}
                   {evento.descripcion.includes("terminal destino") && (
-                    <MapsHomeWorkIcon fontSize="large" />
+                    <MapsHomeWorkIcon
+                      fontSize="large"
+                      sx={{ color: "#01ADEE", fontSize: 100 }}
+                    />
                   )}
                   {evento.descripcion.includes("reparto") && (
-                    <LocalShippingIcon fontSize="large" />
+                    <LocalShippingIcon
+                      fontSize="large"
+                      sx={{ color: "#01ADEE", fontSize: 100 }}
+                    />
                   )}
                   {evento.descripcion.includes("Entregada") && (
-                    <BeenhereIcon fontSize="large" />
+                    <BeenhereIcon
+                      fontSize="large"
+                      sx={{ color: "#01ADEE", fontSize: 100 }}
+                    />
                   )}
                 </Box>
-                <Typography sx={{ whiteSpace: "nowrap" }}>
+                <Typography
+                  sx={{ whiteSpace: "nowrap" }}
+                  className={classes.Texto}
+                >
                   {evento.descripcion}
                 </Typography>
-                <Typography sx={{ whiteSpace: "nowrap" }}>
+                <Typography
+                  sx={{ whiteSpace: "nowrap" }}
+                  className={classes.Texto}
+                >
                   Ubicación: {evento.ubicacion}
                 </Typography>
-                <Typography sx={{ whiteSpace: "nowrap" }}>
+                <Typography
+                  sx={{ whiteSpace: "nowrap" }}
+                  className={classes.Texto}
+                >
                   {evento.fecha}
                 </Typography>
               </Grid>
@@ -150,10 +197,26 @@ const Tracking = ({ numeroGuia }: TrackingProps) => {
           <Divider />
         </Grid>
         <Grid item xs={12} textAlign="center">
-          <Typography>Ubicación en el mapa de tu Paquete</Typography>
+          <Typography
+            className={classes.Titulo}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+            }}
+          >
+            Ubicación en el mapa de tu Paquete{" "}
+            <ShareLocationIcon sx={{ fontSize: 50 }} />
+          </Typography>
         </Grid>
-        <Grid item xs={12} textAlign="center">
-          <MapaTracking coordenadasActuales={coordenadasActuales} />
+
+        <Grid item xs={12} display="flex" justifyContent="center">
+          <Card sx={{ width: "70%", height: "500px" }}>
+            <CardContent>
+              <MapaTracking coordenadasActuales={coordenadasActuales} />
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
     </Box>

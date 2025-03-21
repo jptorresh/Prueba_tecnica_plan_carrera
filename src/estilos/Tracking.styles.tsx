@@ -44,4 +44,18 @@ export const useStylesTracking = makeStyles((theme) => ({
     borderRadius:  "20px !important",
     width: "110% !important",
   },
+  Titulo:
+    {
+      fontFamily: "Roboto, sans-serif",
+      fontSize: "1.5rem !important",
+      fontWeight: "700 !important",
+      color: "#707070",
+    },
+  Texto:
+    {
+      fontFamily: "Roboto, sans-serif",
+      fontSize: "1.5rem !important",
+      fontWeight: "700 !important",
+      color: "#00000033",
+    },
 }));

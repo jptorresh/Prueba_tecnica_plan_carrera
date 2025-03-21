@@ -87,7 +87,6 @@ const ConsultarGuia = () => {
       </Box>
       <Dialog
         open={openTracking}
-        onClose={handleCloseTracking}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         sx={{
@@ -98,7 +97,7 @@ const ConsultarGuia = () => {
           },
         }}
       >
-        <Tracking numeroGuia={numeroGuia} />
+        <Tracking numeroGuia={numeroGuia} onClose={handleCloseTracking}/>
       </Dialog>
     </>
   );
