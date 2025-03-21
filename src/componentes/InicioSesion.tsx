@@ -23,6 +23,12 @@ const InicioSesion = () => {
     }
   };
 
+  const manejadorEnter = (event) => {
+    if (event.key === "Enter") {
+      irSeguimiento();
+    }
+  };
+
   return (
     <Box sx={{ flexGrow: 1, p: 2 }}>
       <Grid2 container direction="column" spacing={2}>
@@ -42,6 +48,7 @@ const InicioSesion = () => {
             variant="filled"
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
+           
           />
           <TextField
             id="filled-basic"
@@ -51,6 +58,7 @@ const InicioSesion = () => {
             value={contrasena}
             onChange={(e) => setContrasena(e.target.value)}
             sx={{ marginLeft: 1 }}
+            onKeyDown={manejadorEnter}
           />
         </Grid>
         <Grid item xs={12}>
@@ -60,6 +68,7 @@ const InicioSesion = () => {
             color="primary"
             onClick={irSeguimiento}
             disabled={noTracking}
+          
           >
             Iniciar Sesión
           </Button>
