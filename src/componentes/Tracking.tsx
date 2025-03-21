@@ -59,15 +59,14 @@ const Tracking = ({ numeroGuia, onClose }: TrackingProps) => {
         cordenadas: { lat: 6.2442, lng: -75.5812 },
       },
     ];
-  
+
     return {
       numero_guia: numeroGuia,
-      origen: eventos[0].ubicacion, 
-      fecha_estimada_entrega: eventos[eventos.length - 1].fecha, 
+      origen: eventos[0].ubicacion,
+      fecha_estimada_entrega: eventos[eventos.length - 1].fecha,
       eventos,
     };
   };
-  
 
   const guia = obtenerGuiaSimulada();
   const [eventosMostrados, setEventosMostrados] = useState([guia.eventos[0]]);
@@ -113,7 +112,20 @@ const Tracking = ({ numeroGuia, onClose }: TrackingProps) => {
           <Typography className={classes.Titulo}>
             Este es el número de tu guía
           </Typography>
-          <Typography className={classes.TituloConsulta}>{guia.numero_guia}</Typography>
+          <div
+            style={{
+              backgroundColor: "#F05A28",
+              borderRadius: "30px",
+              padding: "8px",
+              display: "inline-block",
+              width: "300px",
+              marginBottom: "50px",
+            }}
+          >
+            <Typography sx={{ color: "white" }} className={classes.Titulo}>
+              {guia.numero_guia}
+            </Typography>
+          </div>
           <Typography className={classes.Titulo}>
             Enviada desde: <span className={classes.Texto}>{guia.origen}</span>
           </Typography>
