@@ -1,8 +1,8 @@
 import * as React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import InicioSesion from "./componentes/inicioSesion";
-import SeguimientoGuia from "./componentes/seguimientoGuia";
+import InicioSesion from "./componentes/InicioSesion";
+import SeguimientoGuia from "./componentes/SeguimientoGuia";
 
 function App() {
   return (
