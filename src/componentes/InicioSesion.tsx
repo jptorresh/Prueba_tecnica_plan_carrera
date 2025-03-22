@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid2, Grid, TextField } from "@mui/material";
+import { Button, Grid2, Grid, TextField, OutlinedInput } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
@@ -33,7 +33,11 @@ const InicioSesion = () => {
     <Box sx={{ flexGrow: 1, p: 2 }}>
       <Grid2 container direction="column" spacing={2}>
         <Grid item xs={12}>
-          <img src="/ubicacion.jpg" alt="ubicacion" />
+          <img
+            src="/ubicacion.jpg"
+            alt="ubicacion"
+            style={{ width: "350px", height: "auto" }}
+          />
         </Grid>
         <Grid item xs={12}>
           <Typography className={classes.TituloTracking}>
@@ -42,23 +46,28 @@ const InicioSesion = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <TextField
+          <OutlinedInput
             id="filled-basic"
-            label="Ingresa tu usuario"
-            variant="filled"
+            placeholder="Digita tu usuario"
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
-           
+            className={classes.inputSesion}
+            sx={{
+              "& input:-webkit-autofill": {
+                WebkitBoxShadow: "#E0E6E9 0 0 0 1000px inset",
+                backgroundColor: "red",
+              },
+            }}
           />
-          <TextField
+          <OutlinedInput
             id="filled-basic"
-            label="Contraseña"
-            variant="filled"
+            placeholder="Digita tu contraseña"
             type="password"
             value={contrasena}
             onChange={(e) => setContrasena(e.target.value)}
             sx={{ marginLeft: 1 }}
             onKeyDown={manejadorEnter}
+            className={classes.inputSesion}
           />
         </Grid>
         <Grid item xs={12}>
@@ -68,7 +77,6 @@ const InicioSesion = () => {
             color="primary"
             onClick={irSeguimiento}
             disabled={noTracking}
-          
           >
             Iniciar Sesión
           </Button>

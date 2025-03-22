@@ -55,11 +55,11 @@ const ConsultarGuia = () => {
     <>
       <Box
         component="form"
-        sx={{ "& > :not(style)": { m: 1, width: "65ch" } }}
+        sx={{ "& > :not(style)": { m: 1, width: "60ch" } }}
         noValidate
         autoComplete="off"
       >
-        <img src="/paquete.avif" alt="paquete" />
+        <img src="/paquete.avif" alt="paquete" style={{width: "350px", height: "auto"}}/>
         <Typography className={classes.TituloConsulta}>
           Ingresa los 11 números de tu guía Nacional o Internacional.
         </Typography>

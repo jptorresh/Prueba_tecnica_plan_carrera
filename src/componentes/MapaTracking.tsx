@@ -21,11 +21,14 @@ const MapaTracking = ({ coordenadasActuales }: MapaTrackingProps) => {
 
 
     return () => {
+    
       map.remove();
     };
   }, [coordenadasActuales]);
 
   return <div id="map" style={{ height: "500px", width: "100%" }}></div>;
 };
+
+
 
 export default MapaTracking;
