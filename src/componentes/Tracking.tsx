@@ -17,6 +17,7 @@ import MapaTracking from "./MapaTracking";
 import { useStylesTracking } from "../estilos/Tracking.styles";
 import CloseIcon from "@mui/icons-material/Close";
 import ShareLocationIcon from "@mui/icons-material/ShareLocation";
+import useAppStore from "../store/useAppStore";
 
 interface TrackingProps {
   numeroGuia: string;
@@ -25,37 +26,38 @@ interface TrackingProps {
 
 const Tracking = ({ numeroGuia, onClose }: TrackingProps) => {
   const classes = useStylesTracking();
+  const { user } = useAppStore();
 
   const obtenerGuiaSimulada = () => {
     const eventos = [
       {
-        descripcion: "En terminal origen",
+        descripcion: "Terminal origen",
         ubicacion: "Cali",
-        fecha: "2021-12-15 10:00",
+        fecha: "2025-03-25 10:00",
         cordenadas: { lat: 3.4516, lng: -76.532 },
       },
       {
-        descripcion: "En transporte",
+        descripcion: "Transporte",
         ubicacion: "Cali",
-        fecha: "2021-12-15 12:00",
+        fecha: "2025-03-25 14:00",
         cordenadas: { lat: 3.4516, lng: -76.532 },
       },
       {
-        descripcion: "En terminal destino",
+        descripcion: "Terminal destino",
         ubicacion: "Medellín",
-        fecha: "2021-12-15 14:00",
+        fecha: "2025-03-25 20:00",
         cordenadas: { lat: 6.2442, lng: -75.5812 },
       },
       {
-        descripcion: "En reparto",
+        descripcion: "Reparto",
         ubicacion: "Medellín",
-        fecha: "2021-12-15 16:00",
+        fecha: "2026-03-26 08:00",
         cordenadas: { lat: 6.2442, lng: -75.5812 },
       },
       {
         descripcion: "Entregada",
         ubicacion: "Medellín",
-        fecha: "2021-12-15 18:00",
+        fecha: "2026-03-26 15:00",
         cordenadas: { lat: 6.2442, lng: -75.5812 },
       },
     ];
@@ -108,27 +110,58 @@ const Tracking = ({ numeroGuia, onClose }: TrackingProps) => {
             <CloseIcon fontSize="large" />
           </IconButton>
         </Grid>
-        <Grid item xs={12} textAlign="center">
-          <Typography className={classes.Titulo}>
-            Este es el número de tu guía
+        <Grid item xs={12} textAlign="center" sx={{ mb: 3 }}>
+          <Typography className={classes.TituloConsulta}>
+            ¡Tu paquete está en camino! Rastrea su recorrido aquí
           </Typography>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
           <div
             style={{
-              backgroundColor: "#F05A28",
-              borderRadius: "30px",
-              padding: "8px",
-              display: "inline-block",
-              width: "300px",
-              marginBottom: "50px",
+              display: "flex",
+              justifyContent: "center",
+              backgroundColor: "#E0E6E9",
+              padding: "20px",
+              borderRadius: "60px",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "35%",
             }}
           >
-            <Typography sx={{ color: "white" }} className={classes.Titulo}>
-              {guia.numero_guia}
+            <Typography className={classes.Titulo}>
+              Este es el número de tu guía
             </Typography>
+
+            <div
+              style={{
+                backgroundColor: "#F05A28",
+                borderRadius: "30px",
+                padding: "8px",
+                display: "inline-block",
+                width: "300px",
+                marginTop: "20px",
+              }}
+            >
+              <Typography sx={{ color: "white" }} className={classes.Titulo}>
+                {guia.numero_guia}
+              </Typography>
+            </div>
           </div>
-          <Typography className={classes.Titulo}>
-            Enviada desde: <span className={classes.Texto}>{guia.origen}</span>
-          </Typography>
+          <Grid item xs={12} sx={{ mt: 4 }}>
+            <Typography className={classes.Titulo}>
+              Enviada desde:{" "}
+              <span className={classes.Texto}>{guia.origen}</span>
+            </Typography>
+          </Grid>
         </Grid>
         <Grid item xs={12} textAlign="center">
           <Typography className={classes.Titulo}>
@@ -148,55 +181,53 @@ const Tracking = ({ numeroGuia, onClose }: TrackingProps) => {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            sx={{ p: 1, mt: 2 }}
+            sx={{ mt: 6, mb: 5 }}
           >
             <Stack direction="row" alignItems="center" spacing={2} width="100%">
               <Grid item xs={12} textAlign="center">
                 <Box>
-                  {evento.descripcion.includes("terminal origen") && (
-                    <MapsHomeWorkIcon
-                      sx={{ color: "#01ADEE", fontSize: 100 }}
-                    />
+                  {evento.descripcion.includes("Terminal origen") && (
+                    <MapsHomeWorkIcon sx={{ color: "#01ADEE", fontSize: 80 }} />
                   )}
-                  {evento.descripcion.includes("transporte") && (
+                  {evento.descripcion.includes("Transporte") && (
                     <LocalShippingIcon
                       fontSize="large"
-                      sx={{ color: "#01ADEE", fontSize: 100 }}
+                      sx={{ color: "#01ADEE", fontSize: 80 }}
                     />
                   )}
-                  {evento.descripcion.includes("terminal destino") && (
+                  {evento.descripcion.includes("Terminal destino") && (
                     <MapsHomeWorkIcon
                       fontSize="large"
-                      sx={{ color: "#01ADEE", fontSize: 100 }}
+                      sx={{ color: "#01ADEE", fontSize: 80 }}
                     />
                   )}
-                  {evento.descripcion.includes("reparto") && (
+                  {evento.descripcion.includes("Reparto") && (
                     <LocalShippingIcon
                       fontSize="large"
-                      sx={{ color: "#01ADEE", fontSize: 100 }}
+                      sx={{ color: "#01ADEE", fontSize: 80 }}
                     />
                   )}
                   {evento.descripcion.includes("Entregada") && (
                     <BeenhereIcon
                       fontSize="large"
-                      sx={{ color: "#01ADEE", fontSize: 100 }}
+                      sx={{ color: "#01ADEE", fontSize: 80 }}
                     />
                   )}
                 </Box>
                 <Typography
-                  sx={{ whiteSpace: "nowrap" }}
+                  sx={{ whiteSpace: "nowrap", textAlign: "center" }}
                   className={classes.Texto}
                 >
                   {evento.descripcion}
                 </Typography>
                 <Typography
-                  sx={{ whiteSpace: "nowrap" }}
+                  sx={{ whiteSpace: "nowrap", textAlign: "center" }}
                   className={classes.Texto}
                 >
                   Ubicación: {evento.ubicacion}
                 </Typography>
                 <Typography
-                  sx={{ whiteSpace: "nowrap" }}
+                  sx={{ whiteSpace: "nowrap", textAlign: "center" }}
                   className={classes.Texto}
                 >
                   {evento.fecha}
@@ -224,6 +255,7 @@ const Tracking = ({ numeroGuia, onClose }: TrackingProps) => {
               gap: 1,
             }}
           >
+            Hola <span className={classes.Texto}>{user}</span> esta es la
             Ubicación en el mapa de tu Paquete{" "}
             <ShareLocationIcon sx={{ fontSize: 50 }} />
           </Typography>

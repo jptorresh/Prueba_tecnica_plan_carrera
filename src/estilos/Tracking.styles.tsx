@@ -56,6 +56,15 @@ export const useStylesTracking = makeStyles((theme) => ({
       fontFamily: "Roboto, sans-serif",
       fontSize: "1.5rem !important",
       fontWeight: "700 !important",
-      color: "#00000033",
+      color: "#00000066",
     },
+    inputSesion:{
+      fontFamily: "Roboto, sans-serif",
+      fontSize: "1rem !important",
+      fontWeight: "bold",
+      background: "#E0E6E9 !important",
+      color: "black !important",
+      borderRadius:  "30px !important",
+
+    }
 }));
