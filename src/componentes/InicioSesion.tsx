@@ -44,7 +44,7 @@ const InicioSesion = () => {
         <Grid item xs={12}>
           <TextField
             id="filled-basic"
-            label="Usuario"
+            label="Ingresa tu usuario"
             variant="filled"
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
