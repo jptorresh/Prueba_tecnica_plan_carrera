@@ -49,6 +49,7 @@ const ConsultarGuia = () => {
 
   const handleCloseTracking = () => {
     setOpenTracking(false);
+    setNumeroGuia("");
   };
 
   return (
